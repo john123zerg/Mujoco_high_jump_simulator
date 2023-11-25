@@ -19,12 +19,12 @@
     
 1. Train
    ```bash
-    python hum.py Walker2d-v4 SAC -t -p MlpPolicy
-    python hum.py Walker2d-v4 A2C -t -p MlpPolicy
-    python hum.py Walker2d-v4 PPO -t -p MlpPolicy
-    python hum.py Walker2d-v4 TRPO -t -p MlpPolicy
-    python hum.py Walker2d-v4 TD3 -t -p MlpPolicy
-    python hum.py Walker2d-v4 DDPG -t -p MlpPolicy
+    python train.py Walker2d-v4 SAC -t -p MlpPolicy
+    python train.py Walker2d-v4 A2C -t -p MlpPolicy
+    python train.py Walker2d-v4 PPO -t -p MlpPolicy
+    python train.py Walker2d-v4 TRPO -t -p MlpPolicy
+    python train.py Walker2d-v4 TD3 -t -p MlpPolicy
+    python train.py Walker2d-v4 DDPG -t -p MlpPolicy
 </details>
 
 
@@ -34,6 +34,6 @@
     
 1. Test
    ```bash
-    python hum.py Humanoid-v4 SAC -s ./models/Walker2d-v4_A2C_MlpPolicy_50000.zip
+    python train.py Humanoid-v4 SAC -s ./models/Walker2d-v4_A2C_MlpPolicy_50000.zip
 </details>
 
