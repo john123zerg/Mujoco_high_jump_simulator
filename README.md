@@ -26,6 +26,8 @@
     python hum.py Walker2d-v4 TD3 -t -p MlpPolicy
     python hum.py Walker2d-v4 DDPG -t -p MlpPolicy
 </details>
+
+
 ## How to Test 
 <details>
     <summary>Test the model</summary>
