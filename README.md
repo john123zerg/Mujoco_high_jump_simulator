@@ -36,7 +36,7 @@
     <summary>Test the model</summary>
     
 1. Download the model files from the models folder
-   ```bash
+   
     https://drive.google.com/file/d/1e43kluy7EnhDWN1LeRMWMxoJAoGZUYT-/view?usp=sharing
 
 2. Test
