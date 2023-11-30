@@ -22,6 +22,7 @@ pattern = re.compile(r'<([^<>]*)>')
 def train(env, sb3_algo,policy):
     #policy_='MlpPolicy','CnnPolicy',MultiInputPolicy',
     # The noise objects for DDPG
+    print(env)
     n_actions = env.action_space.shape[-1]
     action_noise = NormalActionNoise(mean=np.zeros(n_actions), sigma=0.1 * np.ones(n_actions))
     match sb3_algo:
@@ -30,11 +31,11 @@ def train(env, sb3_algo,policy):
         case 'TD3':
             model = TD3(policy, env,action_noise=action_noise, verbose=1, device='cuda', tensorboard_log=log_dir)
         case 'A2C':
-            model = A2C(policy, env, action_noise=action_noise,verbose=1, device='cuda', tensorboard_log=log_dir)
+            model = A2C(policy, env,verbose=1, device='cuda', tensorboard_log=log_dir)
         case 'TRPO':
             model = TRPO(policy, env,verbose=1, device='cuda', tensorboard_log=log_dir)
         case 'PPO':
-            model = PPO(policy, env, action_noise=action_noise,verbose=1, device='cuda', tensorboard_log=log_dir)
+            model = PPO(policy, env, verbose=1, device='cuda', tensorboard_log=log_dir)
         case 'DDPG':
             model = DDPG(policy, env, action_noise=action_noise,verbose=1, device='cuda', tensorboard_log=log_dir)
         case _:
@@ -48,12 +49,20 @@ def train(env, sb3_algo,policy):
         modified_file_name = re.search(pattern, str(env))
 
         if modified_file_name:
-            inner_content = modified_file_name.group(1)
+            inner_content = modified_file_name.group(1)[:-2]
             print(inner_content)
-        model.learn(total_timesteps=TIMESTEPS, reset_num_timesteps=False)
-        file_name=f"{model_dir}/{inner_content}_{sb3_algo}_{policy}_{TIMESTEPS*iters}"
-        model.save(file_name)
 
+            # Create a directory for gymenv if it doesn't exist
+            gymenv_dir = os.path.join(model_dir, inner_content)
+            os.makedirs(gymenv_dir, exist_ok=True)
+
+            # Create a directory for sb3_algo if it doesn't exist
+            sb3_algo_dir = os.path.join(gymenv_dir, sb3_algo)
+            os.makedirs(sb3_algo_dir, exist_ok=True)
+
+        model.learn(total_timesteps=TIMESTEPS, reset_num_timesteps=False)
+        file_name = f"{sb3_algo_dir}/{inner_content}_{sb3_algo}_{policy}_{TIMESTEPS*iters}"
+        model.save(file_name)
 def test(env, sb3_algo, path_to_model):
 
     match sb3_algo:
@@ -95,12 +104,12 @@ if __name__ == '__main__':
     parser.add_argument('sb3_algo', help='StableBaseline3 RL algorithm i.e. SAC, TD3')
     parser.add_argument('-t', '--train', action='store_true')
     parser.add_argument('-s', '--test', metavar='path_to_model')
-    parser.add_argument('-p','--policy')
+    parser.add_argument('-p','--policy',default='MlpPolicy')
     args = parser.parse_args()
 
 
     if args.train:
-        gymenv = gym.make(args.gymenv, render_mode=None)
+        gymenv = gym.make(args.gymenv+'-v4', render_mode='None')
         train(gymenv, args.sb3_algo,args.policy)
 
     if(args.test):
