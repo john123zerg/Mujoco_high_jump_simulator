@@ -128,7 +128,7 @@ if __name__ == '__main__':
         train(gymenv, args.sb3_algo,args.policy)
 
     if(args.test):
-        test_file=search_file(args.test)
+        test_file=search_file(args.gymenv+'-'+args.sb3_algo)
         print(test_file)
         if os.path.isfile(test_file):
             gymenv = gym.make(args.gymenv, render_mode='human')
