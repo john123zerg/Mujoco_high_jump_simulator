@@ -37,7 +37,7 @@
     
 1. Test
    ```bash
-    python train.py Humanoid-v4 SAC -s ./models/Walker2d-v4_A2C_MlpPolicy_50000.zip
+    python train.py Humanoid SAC -s Walker2d-A2C
 </details>
 
 
