@@ -40,3 +40,7 @@
 
 
 Need to modify the XML files, modify the env files
+
+In the XML files, a red wall has been added.
+
+In the env files, adjusted the reward to jump high and go further.
