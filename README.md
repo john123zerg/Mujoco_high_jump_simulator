@@ -16,15 +16,18 @@
 ## How to Train 
 <details>
     <summary>Train the model</summary>
+
+['Walker2d','Hopper','HalfCheetah','Humanoid','Ant']
+['SAC','A2C','PPO','TRPO','DDPG','TD3']
     
 1. Train
    ```bash
-    python train.py Walker2d-v4 SAC -t -p MlpPolicy
-    python train.py Walker2d-v4 A2C -t -p MlpPolicy
-    python train.py Walker2d-v4 PPO -t -p MlpPolicy
-    python train.py Walker2d-v4 TRPO -t -p MlpPolicy
-    python train.py Walker2d-v4 TD3 -t -p MlpPolicy
-    python train.py Walker2d-v4 DDPG -t -p MlpPolicy
+    python train.py Walker2d SAC -t 
+    python train.py Walker2d A2C -t 
+    python train.py Walker2d PPO -t 
+    python train.py Walker2d TRPO -t 
+    python train.py Walker2d TD3 -t 
+    python train.py Walker2d DDPG -t 
 </details>
 
 
