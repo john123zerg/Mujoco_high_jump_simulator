@@ -35,7 +35,9 @@
 <details>
     <summary>Test the model</summary>
     
-1. Test
+1. Download the model files from the models folder
+
+2. Test
    ```bash
     python train.py Humanoid SAC -s .
 </details>
