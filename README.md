@@ -37,3 +37,6 @@
     python train.py Humanoid-v4 SAC -s ./models/Walker2d-v4_A2C_MlpPolicy_50000.zip
 </details>
 
+
+
+Need to modify the XML files, modify the env files
