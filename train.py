@@ -63,8 +63,23 @@ def train(env, sb3_algo,policy):
         model.learn(total_timesteps=TIMESTEPS, reset_num_timesteps=False)
         file_name = f"{sb3_algo_dir}/{inner_content}_{sb3_algo}_{policy}_{TIMESTEPS*iters}"
         model.save(file_name)
+def search_file(path_to_model):
+#'Ant-A2C'
+    
+    prefix, suffix = path_to_model.rsplit("-", 1)
+    env_folder=prefix+'-/'
+    algorithm_folder=suffix+'/'
+    path_='./models/'+env_folder+algorithm_folder
+    files = os.listdir(path_)
+    files = [file for file in files if os.path.isfile(os.path.join(path_, file))]
+    print(files)
+    # 파일을 최신 수정 순으로 정렬
+    path_model=sorted(files)[-2]
+    print(path_model)
+    final_path_model=path_model
+    return path_+final_path_model
 def test(env, sb3_algo, path_to_model):
-
+    
     match sb3_algo:
         case 'SAC':
             model = SAC.load(path_to_model, env=env)
@@ -113,8 +128,10 @@ if __name__ == '__main__':
         train(gymenv, args.sb3_algo,args.policy)
 
     if(args.test):
-        if os.path.isfile(args.test):
+        test_file=search_file(args.test)
+        print(test_file)
+        if os.path.isfile(test_file):
             gymenv = gym.make(args.gymenv, render_mode='human')
-            test(gymenv, args.sb3_algo, path_to_model=args.test)
+            test(gymenv, args.sb3_algo, path_to_model=test_file)
         else:
             print(f'{args.test} not found.')
