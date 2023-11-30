@@ -37,7 +37,7 @@
     
 1. Test
    ```bash
-    python train.py Humanoid SAC -s Walker2d-A2C
+    python train.py Humanoid SAC -s .
 </details>
 
 
