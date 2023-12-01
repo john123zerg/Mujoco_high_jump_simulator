@@ -1,7 +1,7 @@
 import gymnasium as gym
 import os
 import argparse
-from utils import parse_pattern,train,test,enable_xml_wall
+from utils import parse_pattern,train,test#,enable_xml_wall
 
 
 # Create directories to hold models and logs
@@ -29,12 +29,12 @@ if __name__ == '__main__':
     parser.add_argument('-ws','--wall_size',default=None)
 
     args = parser.parse_args()
-    enable_xml_wall.modify_xml_file(args.gymenv.lower(),args.wall,args.wall_size)
+    #enable_xml_wall.modify_xml_file(args.gymenv.lower(),args.wall,args.wall_size)
     print(args.gymenv)
     if args.train:
         gymenv = gym.make(args.gymenv+'-v4', render_mode='None')
         print(f'__{args.policy}')
-        train.train_model(gymenv, args.sb3_algo,args.policy)
+        train.train_model(gymenv, args.sb3_algo,args.policy,args.wall,args.wall_size)
 
     if args.test:
         test_file=parse_pattern.search_file(args.gymenv+'-'+args.sb3_algo,args.policy)
