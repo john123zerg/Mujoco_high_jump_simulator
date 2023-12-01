@@ -8,14 +8,15 @@ import torch.nn as nn
 import re
 from gymnasium import spaces
 from stable_baselines3.common.torch_layers import BaseFeaturesExtractor
+from gymnasium.envs.mujoco import ant_v4, half_cheetah_v4, humanoid_v4, hopper_v4, walker2d_v4
 algo_off_list=['SAC','TD3','DDPG']
 algo_on_list=['A2C','PPO','TRPO']
 pattern = re.compile(r'<([^<>]*)>')
 # Create directories to hold models and logs
 model_dir = "./models"
-log_dir = "./logs"
+
 os.makedirs(model_dir, exist_ok=True)
-os.makedirs(log_dir, exist_ok=True)
+
 
 class CustomCNN(BaseFeaturesExtractor):
     """
@@ -52,9 +53,13 @@ policy_kwargs_CNN = dict(
     features_extractor_class=CustomCNN,
     features_extractor_kwargs=dict(features_dim=128),
 )
-def train_model(env, sb3_algo,policy):
+def train_model(env, sb3_algo,policy,wall,wall_size):
     #policy_='MlpPolicy','CnnPolicy',MultiInputPolicy',
     # The noise objects for DDPG
+    modified_file_name = re.search(pattern, str(env))
+    modified_env = modified_file_name.group(1)[:-2]
+    log_dir = f"./logs/{modified_env}/{sb3_algo}/{policy}/{wall}/{wall_size}"
+    os.makedirs(log_dir, exist_ok=True)
     print(env)
     n_actions = env.action_space.shape[-1]
     action_noise = NormalActionNoise(mean=np.zeros(n_actions), sigma=0.1 * np.ones(n_actions))
@@ -99,11 +104,11 @@ def train_model(env, sb3_algo,policy):
 
     TIMESTEPS = 25000
     iters = 0
-    MAX_TIMESTEPS = 25000
+    MAX_TIMESTEPS = 1000000
     total_timesteps = 0
     while total_timesteps < MAX_TIMESTEPS:
             iters += 1
-            modified_file_name = re.search(pattern, str(env))
+           
 
             if modified_file_name:
                 inner_content = modified_file_name.group(1)[:-2]
