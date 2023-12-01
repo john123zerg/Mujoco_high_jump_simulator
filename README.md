@@ -22,12 +22,14 @@
     
 1. Train
    ```bash
-    python train.py Walker2d SAC -t 
-    python train.py Walker2d A2C -t 
-    python train.py Walker2d PPO -t 
-    python train.py Walker2d TRPO -t 
-    python train.py Walker2d TD3 -t 
-    python train.py Walker2d DDPG -t 
+    if wall 0 -> don't need to write -w
+   
+    python main.py Walker2d SAC -t -w 1 -ws 0.2
+    python main.py Walker2d A2C -t -w 1 -ws 0.2
+    python main.py Walker2d PPO -t -w 1 -ws 0.2
+    python main.py Walker2d TRPO -t -w 1 -ws 0.2
+    python main.py Walker2d TD3 -t -w 1 -ws 0.2
+    python main.py Walker2d DDPG -t -w 1 -ws 0.2
 </details>
 
 
@@ -41,7 +43,8 @@
 
 2. Test
    ```bash
-    python train.py Humanoid SAC -s .
+    If you want to create a wall when you didn't have one, write -w 1 -ws [height of wall]
+    python main.py Humanoid SAC -s . -w 1 -ws 0.2
 </details>
 
 
