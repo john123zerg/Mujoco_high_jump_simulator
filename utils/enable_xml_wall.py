@@ -2,6 +2,8 @@ import xml.etree.ElementTree as ET
 from gymnasium.envs.mujoco import ant
 def modify_xml_file(env, wall, wall_size):
     mujoco_folder = ant.__file__[:-6]
+    if env=='halfcheetah':
+        env='half_cheetah'
     xml_file_path = mujoco_folder + f'assets/{env}.xml'
     print(xml_file_path)
     tree = ET.parse(xml_file_path)
