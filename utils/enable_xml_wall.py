@@ -40,7 +40,8 @@ def create_box_element(target_geom_element, wall_size):
         'type': 'box',
         'size': f'0.1 3 {wall_size}',
         'pos': f'3 0 {wall_size}',
-        'rgba': '1 0 0 1'
+        'rgba': '1 0 0 1',
+        'conaffinity' : '1'
     }
     
     geom = ET.Element('geom', geom_attributes)
