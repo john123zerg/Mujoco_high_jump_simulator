@@ -137,5 +137,5 @@ def train_model(env, sb3_algo,policy,wall,wall_size):
                 model.learn(total_timesteps=TIMESTEPS, reset_num_timesteps=False)
                 total_timesteps += TIMESTEPS
 
-            file_name = f"./{sb3_algo_dir}/{inner_content}_{sb3_algo}_{policy}_{total_timesteps:010d}"
+            file_name = f"./{sb3_algo_dir}/{wall}/{wall_size}/{inner_content}_{sb3_algo}_{policy}_{total_timesteps:010d}"
             model.save(file_name)
