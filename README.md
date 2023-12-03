@@ -3,18 +3,65 @@
 Our goal is to simulate a Mujoco high jump since the simulator usually only goes forward.
 
 
+##Setup
+CPU: Intel i7-13700
+GPU: RTX-4090
+RAM: 64GB
 
-1. git clone
+OS : Ubuntu 22.04.03 LTS
+Conda environment : Python 3.11.0
+Mujoco model : mujoco210
+
+Train settings
+(All of them are v4)
+| Humanoid    | Walker2d    | Hopper      | HalfCheetah | Ant         |  
+|-------------|-------------|-------------|-------------|-------------|
+
+| Wall X   | Wall 0.2 | 
+|----------|----------|
+
+| Normal reward | Jump reward  | 
+|---------------|--------------|
+
+(For the jump reward, we added z-coordinates, z-velocity, distance_to_wall_pentaly to the total_reward)
+
+To make these operations a whole pipeline, we made codes that would enable editing the environments efficiently.
+
+
+# 1. Python setups
+1. Creating the conda environment
     ```bash
     git clone https://github.com/john123zerg/RL.git
     conda create -n mujoco python==3.11.0 -y
     conda activate mujoco
     pip install -r requirements.txt
     pip install install patchelf
+# 2. Make sure you have mujoco
+The following platforms are currently supported:
+
+- Linux with Python 3.6+. See [the `Dockerfile`](Dockerfile) for the canonical list of system dependencies.
+- OS X with Python 3.6+.
+
+The following platforms are DEPRECATED and unsupported:
+
+- Windows support has been DEPRECATED and removed in [2.0.2.0](https://github.com/openai/mujoco-py/releases/tag/v2.0.2.0a1). One known good past version is [1.50.1.68](https://github.com/openai/mujoco-py/blob/9ea9bb000d6b8551b99f9aa440862e0c7f7b4191/README.md#requirements).
+- Python 2 has been DEPRECATED and removed in [1.50.1.0](https://github.com/openai/mujoco-py/releases/tag/1.50.1.0). Python 2 users can stay on the [`0.5` branch](https://github.com/openai/mujoco-py/tree/0.5). The latest release there is [`0.5.7`](https://github.com/openai/mujoco-py/releases/tag/0.5.7) which can be installed with `pip install mujoco-py==0.5.7`.
+
+### Install MuJoCo
+
+1. Download the MuJoCo version 2.1 binaries for
+   [Linux](https://mujoco.org/download/mujoco210-linux-x86_64.tar.gz) or
+   [OSX](https://mujoco.org/download/mujoco210-macos-x86_64.tar.gz).
+1. Extract the downloaded `mujoco210` directory into `~/.mujoco/mujoco210`.
+
+If you want to specify a nonstandard location for the package,
+use the env variable `MUJOCO_PY_MUJOCO_PATH`.
+
+[reference : https://github.com/openai/mujoco-py/blob/master/README.md?plain=1 ]
+
     
-## How to Train 
-<details>
-    <summary>Train the model</summary>
+# 3. How to Train 
+
 
 ['Walker2d','Hopper','HalfCheetah','Humanoid','Ant']
 ['SAC','A2C','PPO','TRPO','DDPG','TD3']
@@ -25,12 +72,9 @@ Our goal is to simulate a Mujoco high jump since the simulator usually only goes
    ```bash
     python main.py Walker2d SAC -t -w 1 -ws 0.2 -z 1
     #The parameters -t : train -w : wall existence -ws : wall_size -z : changing_the_reward_function_to_high_jump_reward
-</details>
 
 
-## How to Test 
-<details>
-    <summary>Test the model</summary>
+# 4. How to Test 
     
 1. Download the model files from the models folder
    
@@ -42,8 +86,6 @@ Our goal is to simulate a Mujoco high jump since the simulator usually only goes
     python main.py Humanoid SAC -s . -tw 0 -w 1 -ws 0.2 -z 1
     #The parameters -tw : test_wall -> tells the path_parser to find whether a wall_trained model or not
     #For -w and -ws, it's changing the XML so it deletes, creates, or modifies the wall
-</details>
 
 
 
-We modify the XML files and the env files.
