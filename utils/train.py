@@ -53,12 +53,12 @@ policy_kwargs_CNN = dict(
     features_extractor_class=CustomCNN,
     features_extractor_kwargs=dict(features_dim=128),
 )
-def train_model(env, sb3_algo,policy,wall,wall_size):
+def train_model(env, sb3_algo,policy,wall,wall_size,reward_function):
     #policy_='MlpPolicy','CnnPolicy',MultiInputPolicy',
     # The noise objects for DDPG
     modified_file_name = re.search(pattern, str(env))
     modified_env = modified_file_name.group(1)[:-2]
-    log_dir = f"./logs/{modified_env}/{sb3_algo}/{policy}/{wall}/{wall_size}"
+    log_dir = f"./logs/{modified_env}/{sb3_algo}/{policy}/{wall}/{wall_size}/reward_function_{reward_function}"
     os.makedirs(log_dir, exist_ok=True)
     print(env)
     n_actions = env.action_space.shape[-1]
@@ -137,5 +137,5 @@ def train_model(env, sb3_algo,policy,wall,wall_size):
                 model.learn(total_timesteps=TIMESTEPS, reset_num_timesteps=False)
                 total_timesteps += TIMESTEPS
 
-            file_name = f"./{sb3_algo_dir}/{wall}/{wall_size}/{inner_content}_{sb3_algo}_{policy}_{total_timesteps:010d}"
+            file_name = f"./{sb3_algo_dir}/{wall}/{wall_size}/reward_function_{reward_function}/{inner_content}_{sb3_algo}_{policy}_{total_timesteps:010d}"
             model.save(file_name)
