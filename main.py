@@ -30,9 +30,12 @@ if __name__ == '__main__':
 
     args = parser.parse_args()
     enable_xml_wall.modify_xml_file(args.gymenv.lower(),args.wall,args.wall_size)
-    if args.reward_function==1:
+    print(f'reward_{args.reward_function}')
+    if args.reward_function=='1':
+        print('modifying environment')
         override_env.modify_env(args.gymenv,args.wall,args.wall_size)
     else:
+        print('deleting environment')
         override_env.delete_reward(args.gymenv,args.wall,args.wall_size)
     if args.train:
         gymenv = gym.make(args.gymenv+'-v4', render_mode='None')
