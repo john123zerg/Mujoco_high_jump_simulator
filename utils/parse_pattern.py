@@ -1,7 +1,7 @@
 import re
 import os
 
-def search_file(path_to_model,policy,wall,wall_size,test_wall):
+def search_file(path_to_model,policy,wall,wall_size,test_wall,reward_function):
 #'Ant-A2C'
     
     prefix, suffix = path_to_model.rsplit("-", 1)
@@ -13,7 +13,8 @@ def search_file(path_to_model,policy,wall,wall_size,test_wall):
     else:
         wall_folder=str(wall)+'/'
         wall_size_folder=str(wall_size)+'/'
-        path_='./models/'+env_folder+algorithm_folder+policy_folder+wall_folder+wall_size_folder
+        reward_function_folder=str(f'reward_function_{reward_function}')+'/'
+        path_='./models/'+env_folder+algorithm_folder+policy_folder+wall_folder+wall_size_folder+reward_function_folder
     files = os.listdir(path_)
     files = [file for file in files if os.path.isfile(os.path.join(path_, file))]
     print(files)
