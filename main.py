@@ -1,7 +1,7 @@
 import gymnasium as gym
 import os
 import argparse
-from utils import parse_pattern,train,test,enable_xml_wall
+from utils import parse_pattern,train,test,enable_xml_wall,override_env
 
 
 # Create directories to hold models and logs
@@ -9,8 +9,6 @@ model_dir = "models"
 log_dir = "logs"
 os.makedirs(model_dir, exist_ok=True)
 os.makedirs(log_dir, exist_ok=True)
-        # 정규 표현식을 사용하여 가장 안쪽에 있는 <와 > 사이의 모든 문자를 찾아 제거
-
 algo_off_list=['SAC','TD3','DDPG']
 algo_on_list=['A2C','PPO','TRPO']
 
@@ -28,19 +26,20 @@ if __name__ == '__main__':
     parser.add_argument('-w','--wall',default=0)
     parser.add_argument('-ws','--wall_size',default=None)
     parser.add_argument('-tw','--test_wall',default=0)
+    parser.add_argument('-z','--reward_function',default=0)
 
     args = parser.parse_args()
     enable_xml_wall.modify_xml_file(args.gymenv.lower(),args.wall,args.wall_size)
-    print(args.gymenv)
+    if args.reward_function==1:
+        override_env.modify_env(args.gymenv,args.wall,args.wall_size)
+    else:
+        override_env.delete_reward(args.gymenv,args.wall,args.wall_size)
     if args.train:
         gymenv = gym.make(args.gymenv+'-v4', render_mode='None')
-        print(gymenv)
-        print(f'__{args.policy}')
-        train.train_model(gymenv, args.sb3_algo,args.policy,args.wall,args.wall_size)
+        train.train_model(gymenv, args.sb3_algo,args.policy,args.wall,args.wall_size,args.reward_function)
 
     if args.test:
-        test_file=parse_pattern.search_file(args.gymenv+'-'+args.sb3_algo,args.policy,args.wall,args.wall_size,args.test_wall)
-        print(test_file)
+        test_file=parse_pattern.search_file(args.gymenv+'-'+args.sb3_algo,args.policy,args.wall,args.wall_size,args.test_wall,args.reward_function)
         if os.path.isfile(test_file):
             gymenv = gym.make(args.gymenv, render_mode='human')
             test.test_model(gymenv, args.sb3_algo, path_to_model=test_file)
