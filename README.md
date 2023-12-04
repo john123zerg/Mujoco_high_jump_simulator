@@ -79,7 +79,7 @@ use the env variable `MUJOCO_PY_MUJOCO_PATH`.
     It will train until 1 million.
    ```bash
     python main.py Walker2d SAC -t -w 1 -ws 0.2 -z 1
-    #The parameters -t : train -w : wall existence -ws : wall_size -z : changing_the_reward_function_to_high_jump_reward
+    #The parameters -t : train, -w : wall existence (Bool), -ws : wall_size (Float), -z : changing_the_reward_function_to_high_jump_reward (Bool)
 
 
 # 4. How to Test 
@@ -92,7 +92,7 @@ use the env variable `MUJOCO_PY_MUJOCO_PATH`.
    If you want to test with a wall when you didn't train with a wall,
    ```bash
     python main.py Humanoid SAC -s . -tw 0 -w 1 -ws 0.2 -z 1
-    #The parameters -tw : test_wall -> tells the path_parser to find whether a wall_trained model or not
+    #The parameters -tw : test_wall -> tells the path_parser to find whether a wall_trained model or not (Bool)
     #For -w and -ws, it's changing the XML so it deletes, creates, or modifies the wall
 
 
