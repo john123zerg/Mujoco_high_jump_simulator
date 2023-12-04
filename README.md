@@ -3,7 +3,7 @@
 Our goal is to simulate a Mujoco high jump since the Mujoco usually only aims to go forward.
 
 
-## Setup
+## Environment setup
 
 CPU: Intel i7-13700
 
