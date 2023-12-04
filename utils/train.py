@@ -53,12 +53,14 @@ policy_kwargs_CNN = dict(
     features_extractor_class=CustomCNN,
     features_extractor_kwargs=dict(features_dim=128),
 )
-def train_model(env, sb3_algo,policy,wall,wall_size,reward_function):
+def train_model(env, sb3_algo,policy,critic_size,wall,wall_size,reward_function):
     #policy_='MlpPolicy','CnnPolicy',MultiInputPolicy',
     # The noise objects for DDPG
     modified_file_name = re.search(pattern, str(env))
     modified_env = modified_file_name.group(1)[:-2]
     log_dir = f"./logs/{modified_env}/{sb3_algo}/{policy}/{wall}/{wall_size}/reward_function_{reward_function}"
+    if critic_size!=32:
+        log_dir = f"./logs/{modified_env}/{sb3_algo}/{policy}/{critic_size}/{wall}/{wall_size}/reward_function_{reward_function}"
     os.makedirs(log_dir, exist_ok=True)
     print(env)
     n_actions = env.action_space.shape[-1]
@@ -67,9 +69,15 @@ def train_model(env, sb3_algo,policy,wall,wall_size,reward_function):
     if sb3_algo in algo_on_list:
         policy_kwargs_dnn = dict(activation_fn=torch.nn.ReLU,
                      net_arch=dict(pi=[32, 32], vf=[32, 32]))
+        if critic_size!=32:
+            policy_kwargs_dnn = dict(activation_fn=torch.nn.ReLU,
+                     net_arch=dict(pi=[32, 32], vf=[int(critic_size), int(critic_size)]))
     else:
         policy_kwargs_dnn = dict(activation_fn=torch.nn.ReLU,
                      net_arch=dict(pi=[32, 32], qf=[32, 32]))
+        if critic_size!=32:
+            policy_kwargs_dnn = dict(activation_fn=torch.nn.ReLU,
+                     net_arch=dict(pi=[32, 32], qf=[int(critic_size), int(critic_size)]))
 
 
 
