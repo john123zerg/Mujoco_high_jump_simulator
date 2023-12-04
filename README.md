@@ -1,6 +1,6 @@
 # Mujoco_high_jump_simulator
 
-Our goal is to simulate a Mujoco high jump since the simulator usually only goes forward.
+Our goal is to simulate a Mujoco high jump since the Mujoco usually only aims to go forward.
 
 
 ## Setup
@@ -18,11 +18,14 @@ Train settings
 | Humanoid    | Walker2d    | Hopper      | HalfCheetah | Ant         |  
 |-------------|-------------|-------------|-------------|-------------|
 
-| Wall X   | Wall 0.2 | 
+| Wall X   | Wall 0.4 | 
 |----------|----------|
 
 | Normal reward | Jump reward  | 
 |---------------|--------------|
+
+| A2C | SAC | DDPG | TD3 | PPO | TRPO |
+|-----|-----|------|-----|-----|------|
 
 (For the jump reward, we added z-coordinates, z-velocity, distance_to_wall_pentaly to the total_reward)
 
