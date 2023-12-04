@@ -27,7 +27,7 @@ Train settings
 
 
 
-| Wall X   | Wall 0.4 | 
+| No Wall  | Wall 0.4 | 
 |----------|----------|
 |<img width="220" alt="image" src="https://github.com/john123zerg/Mujoco_high_jump_simulator/assets/63462803/ab4c8c17-ab73-4373-bf51-b913e38ffae7">|<img width="220" alt="image" src="https://github.com/john123zerg/Mujoco_high_jump_simulator/assets/63462803/9a8878ff-6bbb-42e7-b933-53122d6e17d7">|
 
