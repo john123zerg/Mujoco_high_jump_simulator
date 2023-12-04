@@ -21,6 +21,8 @@ Train settings
 (All of them are v4)
 | Humanoid    | Walker2d    | Hopper      | HalfCheetah | Ant         |  
 |-------------|-------------|-------------|-------------|-------------|
+|![image](https://github.com/john123zerg/Mujoco_high_jump_simulator/assets/63462803/fc70570c-2ec5-464c-8606-426fd8fdcbb2)|![image](https://github.com/john123zerg/Mujoco_high_jump_simulator/assets/63462803/c0ee6381-8ac0-4d22-94da-0af25f07f350)|![image](https://github.com/john123zerg/Mujoco_high_jump_simulator/assets/63462803/96c4388e-d6e5-4d61-b821-6ff59e9089e8)|![image](https://github.com/john123zerg/Mujoco_high_jump_simulator/assets/63462803/c5a109ca-cdae-412a-a242-92f865303660)|![image](https://github.com/john123zerg/Mujoco_high_jump_simulator/assets/63462803/d4f31a02-61b5-4caa-8076-3760c9df5c7a)|
+
 
 | Wall X   | Wall 0.4 | 
 |----------|----------|
