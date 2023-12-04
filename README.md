@@ -2,7 +2,7 @@
 
 First, we sincerely appreciate https://github.com/DLR-RM/stable-baselines3 for supplying the base code.
 
-Our goal is to simulate a Mujoco high jump since the Mujoco usually only aims to go forward.
+Our goal is to simulate a Mujoco high jump since the Mujoco environment usually only aims to go forward.
 
 
 ## Environment setup
