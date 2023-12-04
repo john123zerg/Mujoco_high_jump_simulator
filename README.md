@@ -6,11 +6,15 @@ Our goal is to simulate a Mujoco high jump since the Mujoco usually only aims to
 ## Setup
 
 CPU: Intel i7-13700
+
 GPU: RTX-4090
+
 RAM: 64GB
 
 OS : Ubuntu 22.04.03 LTS
+
 Conda environment : Python 3.11.0
+
 Mujoco model : mujoco210
 
 Train settings
