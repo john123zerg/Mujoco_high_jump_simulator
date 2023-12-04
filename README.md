@@ -84,7 +84,7 @@ use the env variable `MUJOCO_PY_MUJOCO_PATH`.
 
 # 4. How to Test 
     
-1. Download the model files from the models folder
+1. Download the model files from the models folder if you want the full files (The final models are already in the repository)
    
     https://drive.google.com/file/d/1e43kluy7EnhDWN1LeRMWMxoJAoGZUYT-/view?usp=sharing
 
