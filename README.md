@@ -1,4 +1,4 @@
-# Mujoco_high_jump_simulator
+
 
 First, we sincerely appreciate https://github.com/DLR-RM/stable-baselines3 for supplying the base code.
 
@@ -33,6 +33,7 @@ Train settings
 
 | Normal reward | Jump reward  | 
 |---------------|--------------|
+|<img width="220" alt="image" src="https://github.com/john123zerg/Mujoco_high_jump_simulator/assets/63462803/77b1a63c-4e75-4fbc-9521-d3841a17fc75">|<img width="220" alt="image" src="https://github.com/john123zerg/Mujoco_high_jump_simulator/assets/63462803/136e57b4-0a35-4c66-879f-ed73eefa4e9d">|
 
 | A2C | SAC | DDPG | TD3 | PPO | TRPO |
 |-----|-----|------|-----|-----|------|
