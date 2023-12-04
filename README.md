@@ -3,7 +3,8 @@
 Our goal is to simulate a Mujoco high jump since the simulator usually only goes forward.
 
 
-##Setup
+## Setup
+
 CPU: Intel i7-13700
 GPU: RTX-4090
 RAM: 64GB
