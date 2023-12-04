@@ -107,5 +107,8 @@ use the env variable `MUJOCO_PY_MUJOCO_PATH`.
 1. Tensorboard commands (Your train code needs to be running)
    ```bash
     tensorboard --logdir ./logs
+2. Episode reward mean results (e.g., Humanoid without walls and with normal rewards)
+   ![image](https://github.com/john123zerg/Mujoco_high_jump_simulator/assets/63462803/a791591f-bfdb-4b70-9315-b306e4d4d5aa)
+
    
 
