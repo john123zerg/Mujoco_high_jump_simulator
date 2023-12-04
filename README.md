@@ -38,7 +38,7 @@ Train settings
 | A2C | SAC | DDPG | TD3 | PPO | TRPO |
 |-----|-----|------|-----|-----|------|
 
-(For the jump reward, we added z-coordinates, z-velocity, distance_to_wall_pentaly to the total_reward)
+(For the jump reward, we added weighted z-coordinates and z-velocity to the total_reward)
 
 To make these operations a whole pipeline, we made codes that would enable editing the environments efficiently.
 
