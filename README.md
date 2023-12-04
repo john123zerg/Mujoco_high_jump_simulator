@@ -95,5 +95,10 @@ use the env variable `MUJOCO_PY_MUJOCO_PATH`.
     #The parameters -tw : test_wall -> tells the path_parser to find whether a wall_trained model or not (Bool)
     #For -w and -ws, it's changing the XML so it deletes, creates, or modifies the wall
 
+# 5. Using the Tensorboard
 
+1. Tensorboard commands (Your train code needs to be running)
+   ```bash
+    tensorboard --logdir ./logs
+   
 
