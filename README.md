@@ -49,7 +49,11 @@ To make these operations a whole pipeline, we made codes that would enable editi
     git clone https://github.com/john123zerg/Mujoco_high_jump_simulator.git
     conda create -n mujoco python==3.11.0 -y
     conda activate mujoco
-    pip install -r requirements.txt
+    cd Mujoco_high_jump_simulator
+    pip install gymnasium
+    pip install sb3_contrib
+    pip install gymnasium[mujoco]
+    pip install tensorboard
     pip install install patchelf
     python init.py
 # 2. Make sure you have mujoco
