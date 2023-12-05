@@ -46,7 +46,7 @@ To make these operations a whole pipeline, we made codes that would enable editi
 # 1. Python setups
 1. Creating the conda environment
     ```bash
-    git clone https://github.com/john123zerg/RL.git
+    git clone https://github.com/john123zerg/Mujoco_high_jump_simulator.git
     conda create -n mujoco python==3.11.0 -y
     conda activate mujoco
     pip install -r requirements.txt
