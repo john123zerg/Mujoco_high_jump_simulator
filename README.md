@@ -103,7 +103,7 @@ use the env variable `MUJOCO_PY_MUJOCO_PATH`.
 2. Test
    If you want to test with a wall when you didn't train with a wall,
    ```bash
-    python main.py Humanoid SAC -s . -tw 0 -w 1 -ws 0.2 -z 1
+    python main.py Humanoid SAC -s . -w 1 -ws 0.2 -tw 1 -tws 0.2 -z 1
     #The parameters -tw : test_wall -> tells the path_parser to find whether a wall_trained model or not (Bool)
     #For -w and -ws, it's changing the XML so it deletes, creates, or modifies the wall
 
