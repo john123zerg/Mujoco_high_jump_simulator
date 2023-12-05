@@ -1,8 +1,6 @@
-import re
 import os
 
-def search_file(path_to_model,policy,wall,wall_size,test_wall,reward_function):
-    
+def search_file(path_to_model,policy,wall,wall_size,test_wall,reward_function,file_number):
     prefix, suffix = path_to_model.rsplit("-", 1)
     env_folder=prefix+'-/'
     algorithm_folder=suffix+'/'
@@ -10,7 +8,6 @@ def search_file(path_to_model,policy,wall,wall_size,test_wall,reward_function):
     if int(test_wall)==0 and int(wall)==1:
         wall=0
         wall_size=None
-
     wall_folder=str(wall)+'/'
     wall_size_folder=str(wall_size)+'/'
     reward_function_folder=str(f'reward_function_{reward_function}')+'/'
@@ -22,6 +19,6 @@ def search_file(path_to_model,policy,wall,wall_size,test_wall,reward_function):
     path_model=sorted(files)
     print(path_model)
     
-    final_path_model=path_model[-1]
+    final_path_model=path_model[-1-int(file_number)]
     print(final_path_model)
     return path_+final_path_model
