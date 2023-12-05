@@ -1,4 +1,4 @@
-# This folder is mainly for the files having the functions to edit the XML file, environment file, path searching, training and testing.
+### This folder is mainly for the files that have the functions to edit the XML file, environment file, path searching, training, and testing.
 
 enable_xml_wall - Creating a wall, editing a wall, or deleting a wall
 override_env - Modifying the environment.
