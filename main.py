@@ -12,8 +12,6 @@ os.makedirs(log_dir, exist_ok=True)
 algo_off_list=['SAC','TD3','DDPG']
 algo_on_list=['A2C','PPO','TRPO']
 
-
-
 if __name__ == '__main__':
 
     # Parse command line inputs
@@ -40,7 +38,7 @@ if __name__ == '__main__':
     if args.reward_function=='1':
         print('modifying environment')
         override_env.modify_env(args.gymenv)
-        print('override_2')
+        print('override environment')
     else:
         print('deleting environment')
         override_env.delete_reward(args.gymenv)
@@ -49,7 +47,7 @@ if __name__ == '__main__':
         train.train_model(gymenv, args.sb3_algo,args.policy,args.critic_size,args.wall,args.wall_size,args.reward_function)
 
     if args.test:
-        test_file=parse_pattern.search_file(args.gymenv+'-'+args.sb3_algo,args.policy,args.wall,args.wall_size,args.test_wall,args.reward_function,args.file_number)
+        test_file=parse_pattern.search_file(args.gymenv+'-'+args.sb3_algo,args.policy,args.critic_size,args.wall,args.wall_size,args.test_wall,args.reward_function,args.file_number)
         if os.path.isfile(test_file):
             gymenv = gym.make(args.gymenv+'-v4', render_mode='human')
             test.test_model(gymenv, args.sb3_algo,args.record, path_to_model=test_file)
