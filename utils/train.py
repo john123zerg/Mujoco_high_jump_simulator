@@ -14,8 +14,111 @@ algo_on_list=['A2C','PPO','TRPO']
 pattern = re.compile(r'<([^<>]*)>')
 # Create directories to hold models and logs
 model_dir = "./models"
-
 os.makedirs(model_dir, exist_ok=True)
+
+def train_model(env, sb3_algo,policy,critic_size,wall,wall_size,reward_function):
+    #policy_='MlpPolicy','CnnPolicy',MultiInputPolicy',
+    # The noise objects for off policies
+    modified_file_name = re.search(pattern, str(env))
+    modified_env = modified_file_name.group(1)[:-2]
+    log_dir = f"./logs/{modified_env}/{sb3_algo}/{policy}/{wall}/{wall_size}/reward_function_{reward_function}"
+    print(f'train file is currently running...')
+    print(f'current_environment is {modified_env}/{sb3_algo}')
+    n_actions = env.action_space.shape[-1]
+    # Add noise to the actions
+    action_noise = NormalActionNoise(mean=np.zeros(n_actions), sigma=0.1 * np.ones(n_actions))
+
+
+
+    if policy=='CNN':
+        policy_kwargs_=policy_kwargs_CNN
+        policy_='CnnPolicy'
+    elif policy=='DNN':
+        
+        policy_kwargs_=DNN_usage(sb3_algo,algo_on_list,log_dir)[0]
+        log_dir=DNN_usage(sb3_algo,algo_on_list,log_dir)[1]
+        policy_='MlpPolicy'
+    else:
+        policy_kwargs_=None
+        policy_='MlpPolicy'
+    os.makedirs(log_dir, exist_ok=True)        
+    print(policy_kwargs_)
+    match sb3_algo:
+        
+        case 'SAC':
+            model = SAC(policy_, env,policy_kwargs=policy_kwargs_, action_noise=action_noise,verbose=1, device='cuda', tensorboard_log=log_dir)
+        case 'TD3':
+            model = TD3(policy_, env,policy_kwargs=policy_kwargs_,action_noise=action_noise, verbose=1, device='cuda', tensorboard_log=log_dir)
+        case 'DDPG':
+            model = DDPG(policy_, env,policy_kwargs=policy_kwargs_, action_noise=action_noise,verbose=1, device='cuda', tensorboard_log=log_dir)
+        case 'A2C':
+            model = A2C(policy_, env,policy_kwargs=policy_kwargs_,verbose=1, device='cuda', tensorboard_log=log_dir)
+        case 'TRPO':
+            model = TRPO(policy_, env,policy_kwargs=policy_kwargs_,verbose=1, device='cuda', tensorboard_log=log_dir)
+        case 'PPO':
+            model = PPO(policy_, env,policy_kwargs=policy_kwargs_, verbose=1, device='cuda', tensorboard_log=log_dir)
+        case _:
+            print('Algorithm not found')
+            return
+
+    TIMESTEPS = 25000
+    iters = 0
+    MAX_TIMESTEPS = 1000000
+    total_timesteps = 0
+    while total_timesteps < MAX_TIMESTEPS:
+            iters += 1
+            if modified_file_name:
+                inner_content = modified_file_name.group(1)[:-2]
+                print(inner_content)
+                # Create a directory for gymenv if it doesn't exist
+                gymenv_dir = os.path.join(model_dir, inner_content)
+                ###os.makedirs(gymenv_dir, exist_ok=True)
+                # Create a directory for sb3_algo if it doesn't exist
+                sb3_algo_dir = os.path.join(gymenv_dir, sb3_algo)
+                ###os.makedirs(sb3_algo_dir, exist_ok=True)
+                # Create a directory for policy if it doesn't exist
+                if policy != 'None':
+                    sb3_algo_dir = os.path.join(sb3_algo_dir, policy)
+                    ###os.makedirs(sb3_algo_dir, exist_ok=True)
+                else:
+                    sb3_algo_dir = os.path.join(sb3_algo_dir, 'MlpPolicy')
+                    ###os.makedirs(sb3_algo_dir, exist_ok=True)
+            # Check if training exceeds the maximum timesteps
+            if total_timesteps + TIMESTEPS > MAX_TIMESTEPS:
+                remaining_timesteps = MAX_TIMESTEPS - total_timesteps
+                model.learn(total_timesteps=remaining_timesteps, reset_num_timesteps=False)
+                break
+            else:
+                model.learn(total_timesteps=TIMESTEPS, reset_num_timesteps=False)
+                total_timesteps += TIMESTEPS
+            if critic_size!=32:
+                file_name=f"./{sb3_algo_dir}/{wall}/{wall_size}/reward_function_{reward_function}/critic_size_{critic_size}/{inner_content}_{sb3_algo}_{policy}_{critic_size}_{total_timesteps:010d}"
+            file_name = f"./{sb3_algo_dir}/{wall}/{wall_size}/reward_function_{reward_function}/{inner_content}_{sb3_algo}_{policy}_{total_timesteps:010d}"
+            model.save(file_name)
+
+######################DNN
+    # In case you want to use the DNN
+def DNN_usage(sb3_algo,algo_on_list,log_dir)
+
+    if sb3_algo in algo_on_list:
+        policy_kwargs_dnn = dict(activation_fn=torch.nn.ReLU,
+                     net_arch=dict(pi=[32, 32], vf=[32, 32]))
+        if critic_size!=32:
+            policy_kwargs_dnn = dict(activation_fn=torch.nn.ReLU,
+                     net_arch=dict(pi=[32, 32], vf=[int(critic_size), int(critic_size)]))
+            log_dir+=f'/critic_size_{critic_size}'
+    else:
+        policy_kwargs_dnn = dict(activation_fn=torch.nn.ReLU,
+                     net_arch=dict(pi=[32, 32], qf=[32, 32]))
+        if critic_size!=32:
+            policy_kwargs_dnn = dict(activation_fn=torch.nn.ReLU,
+                     net_arch=dict(pi=[32, 32], qf=[int(critic_size), int(critic_size)]))
+            log_dir+=f'/critic_size_{critic_size}'
+
+    return policy_kwargs_dnn,log_dir
+
+
+#################### Uses for CNN
 
 
 class CustomCNN(BaseFeaturesExtractor):
@@ -53,97 +156,3 @@ policy_kwargs_CNN = dict(
     features_extractor_class=CustomCNN,
     features_extractor_kwargs=dict(features_dim=128),
 )
-def train_model(env, sb3_algo,policy,critic_size,wall,wall_size,reward_function):
-    #policy_='MlpPolicy','CnnPolicy',MultiInputPolicy',
-    # The noise objects for DDPG
-    modified_file_name = re.search(pattern, str(env))
-    modified_env = modified_file_name.group(1)[:-2]
-    log_dir = f"./logs/{modified_env}/{sb3_algo}/{policy}/{wall}/{wall_size}/reward_function_{reward_function}"
-    if critic_size!=32:
-        log_dir = f"./logs/{modified_env}/{sb3_algo}/{policy}/{critic_size}/{wall}/{wall_size}/reward_function_{reward_function}"
-    os.makedirs(log_dir, exist_ok=True)
-    print(env)
-    n_actions = env.action_space.shape[-1]
-    action_noise = NormalActionNoise(mean=np.zeros(n_actions), sigma=0.1 * np.ones(n_actions))
-    print(sb3_algo)
-    if sb3_algo in algo_on_list:
-        policy_kwargs_dnn = dict(activation_fn=torch.nn.ReLU,
-                     net_arch=dict(pi=[32, 32], vf=[32, 32]))
-        if critic_size!=32:
-            policy_kwargs_dnn = dict(activation_fn=torch.nn.ReLU,
-                     net_arch=dict(pi=[32, 32], vf=[int(critic_size), int(critic_size)]))
-    else:
-        policy_kwargs_dnn = dict(activation_fn=torch.nn.ReLU,
-                     net_arch=dict(pi=[32, 32], qf=[32, 32]))
-        if critic_size!=32:
-            policy_kwargs_dnn = dict(activation_fn=torch.nn.ReLU,
-                     net_arch=dict(pi=[32, 32], qf=[int(critic_size), int(critic_size)]))
-
-
-
-
-    if policy=='CNN':
-        policy_kwargs_=policy_kwargs_CNN
-        policy_='CnnPolicy'
-    elif policy=='DNN':
-        policy_kwargs_=policy_kwargs_dnn
-        policy_='MlpPolicy'
-    else:
-        policy_kwargs_=None
-        policy_='MlpPolicy'
-    print(policy_kwargs_)
-    match sb3_algo:
-        
-        case 'SAC':
-            model = SAC(policy_, env,policy_kwargs=policy_kwargs_, action_noise=action_noise,verbose=1, device='cuda', tensorboard_log=log_dir)
-        case 'TD3':
-            model = TD3(policy_, env,policy_kwargs=policy_kwargs_,action_noise=action_noise, verbose=1, device='cuda', tensorboard_log=log_dir)
-        case 'A2C':
-            model = A2C(policy_, env,policy_kwargs=policy_kwargs_,verbose=1, device='cuda', tensorboard_log=log_dir)
-        case 'TRPO':
-            model = TRPO(policy_, env,policy_kwargs=policy_kwargs_,verbose=1, device='cuda', tensorboard_log=log_dir)
-        case 'PPO':
-            model = PPO(policy_, env,policy_kwargs=policy_kwargs_, verbose=1, device='cuda', tensorboard_log=log_dir)
-        case 'DDPG':
-            model = DDPG(policy_, env,policy_kwargs=policy_kwargs_, action_noise=action_noise,verbose=1, device='cuda', tensorboard_log=log_dir)
-        case _:
-            print('Algorithm not found')
-            return
-
-    TIMESTEPS = 25000
-    iters = 0
-    MAX_TIMESTEPS = 1000000
-    total_timesteps = 0
-    while total_timesteps < MAX_TIMESTEPS:
-            iters += 1
-           
-
-            if modified_file_name:
-                inner_content = modified_file_name.group(1)[:-2]
-                print(inner_content)
-
-                # Create a directory for gymenv if it doesn't exist
-                gymenv_dir = os.path.join(model_dir, inner_content)
-                os.makedirs(gymenv_dir, exist_ok=True)
-
-                # Create a directory for sb3_algo if it doesn't exist
-                sb3_algo_dir = os.path.join(gymenv_dir, sb3_algo)
-                os.makedirs(sb3_algo_dir, exist_ok=True)
-                if policy != 'None':
-                    sb3_algo_dir = os.path.join(sb3_algo_dir, policy)
-                    os.makedirs(sb3_algo_dir, exist_ok=True)
-                else:
-                    sb3_algo_dir = os.path.join(sb3_algo_dir, 'MlpPolicy')
-                    os.makedirs(sb3_algo_dir, exist_ok=True)
-
-            # Check if training exceeds the maximum timesteps
-            if total_timesteps + TIMESTEPS > MAX_TIMESTEPS:
-                remaining_timesteps = MAX_TIMESTEPS - total_timesteps
-                model.learn(total_timesteps=remaining_timesteps, reset_num_timesteps=False)
-                break
-            else:
-                model.learn(total_timesteps=TIMESTEPS, reset_num_timesteps=False)
-                total_timesteps += TIMESTEPS
-
-            file_name = f"./{sb3_algo_dir}/{wall}/{wall_size}/reward_function_{reward_function}/{inner_content}_{sb3_algo}_{policy}_{total_timesteps:010d}"
-            model.save(file_name)
