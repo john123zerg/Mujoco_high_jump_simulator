@@ -1,7 +1,7 @@
 import gymnasium as gym
 import os
 import argparse
-from utils import parse_pattern,train,test,enable_xml_wall,override_env_2
+from utils import parse_pattern,train,test,enable_xml_wall,override_env
 import time
 
 # Create directories to hold models and logs
@@ -39,11 +39,11 @@ if __name__ == '__main__':
     print(f'reward_{args.reward_function}')
     if args.reward_function=='1':
         print('modifying environment')
-        override_env_2.modify_env(args.gymenv)
+        override_env.modify_env(args.gymenv)
         print('override_2')
     else:
         print('deleting environment')
-        override_env_2.delete_reward(args.gymenv)
+        override_env.delete_reward(args.gymenv)
     if args.train:
         gymenv = gym.make(args.gymenv+'-v4', render_mode='None')
         train.train_model(gymenv, args.sb3_algo,args.policy,args.critic_size,args.wall,args.wall_size,args.reward_function)
