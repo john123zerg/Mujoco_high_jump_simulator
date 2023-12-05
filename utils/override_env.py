@@ -2,8 +2,42 @@ import numpy as np
 
 from gymnasium.envs import mujoco
 
+def reward_function(env):
+    match env:
+        case 'half_cheetah':
+            list_=[1,0]
+        case 'walker2d':
+            list_=[1,9,10,0]
+            height_=1.25
+        case 'humanoid':
+            list_=[2,24,26,0]
+            height_=1.4
+        case 'ant':
+            list_=[2,15,17,0]
+            height_=0.75
+        case 'hopper':
+            list_=[1,6,7,0]
+            height_=1.25
 
-def modify_env(env, wall, wall_size):
+    function_code=function_reward_list(list_,height_)
+    return function_code,height_
+
+
+def function_reward_list(list_,height_):
+    if len(list_)==2:
+             
+            function_code= [f"        height_reward =  100**(self.state_vector()[{list_[0]}]/{height_}) if self.state_vector()[{list_[0]}]/{height_} > 0.5 else -100.0 ** {height_}/(self.state_vector()[{list_[0]}]+1e-8)\n",
+    "        reward = forward_reward  + height_reward - ctrl_cost\n"]
+    elif len(list_)==4:
+            function_code= [f"        height_reward =  100**(self.state_vector()[{list_[0]}]/{height_}) if self.state_vector()[{list_[0]}]/{height_} > 0.5 else -100.0 ** {height_}/(self.state_vector()[{list_[0]}]+1e-8)\n",
+    f"        x_reward = 100 ** self.state_vector()[{list_[3]}] if self.state_vector()[{list_[3]}] > 0.0 else -100 ** -self.state_vector()[{list_[3]}]\n",                       
+    f"        x_velocity_reward = 10**self.state_vector()[{list_[1]}] if self.state_vector()[{list_[1]}] > 0.0 else 0.0\n",  
+    f"        z_velocity_reward = 10**self.state_vector()[{list_[2]}] if self.state_vector()[{list_[2]}] > 0.0 else 0.0\n", 
+    "        rewards = forward_reward  + height_reward + x_velocity_reward + z_velocity_reward + healthy_reward + x_reward\n"]
+    return function_code
+
+
+def modify_env(env):
 
 
     if env.lower()=='halfcheetah':
@@ -30,32 +64,11 @@ def modify_env(env, wall, wall_size):
         print(f"Found 'step' function in {env_py} starting at line {step_function_start + 1}.")
     else:
         print("Could not find 'step' function in the code.")
-    modified_code = existing_lines[:step_function_start+step_function_reward] +reward_function(env.lower(),wall,wall_size)+existing_lines[step_function_reward+step_function_start+1:]
+    modified_code = existing_lines[:step_function_start+step_function_reward] +reward_function(env.lower())[0]+existing_lines[step_function_reward+step_function_start+1:]
 
     with open(env_py, 'w') as file:
         file.write("".join(modified_code))
-def reward_function(env,wall,wall_size):
-    match env:
-        case 'half_cheetah':
-            list_=[0]
-        case 'walker2d':
-            list_=[0,8,9]
-        case 'humanoid':
-            list_=[0,22,24]
-        case 'ant':
-            list_=[0,13,15]
-        case 'hopper':
-            list_=[0,5,6]
-    function_code=function_reward_list(wall,wall_size,list_)
-
-
-#Halfcheetah 0
-#Walker2d 0  8 9
-#Humanoid 0 22 24
-#Ant 0 ,13 15
-#Hopper 0 5 6
-    return function_code
-def delete_reward(env,wall,wall_size):
+def delete_reward(env):
     
     if env.lower()=='halfcheetah':
         env='half_cheetah'
@@ -69,35 +82,16 @@ def delete_reward(env,wall,wall_size):
     no_reward_function=0
     for i, line in enumerate(existing_lines):
 
-        if line.strip().startswith(reward_function(env.lower(),wall,wall_size)[0][8:8+5]):
+        if line.strip().startswith(reward_function(env.lower())[0][0][8:8+5]):
             step_function_start = i
             no_reward_function=1
             break
     if no_reward_function==0:
         return
-    
+    print(f'_safsfas_{reward_function(env.lower())[0][0][8:13]}')
     if env.lower()=='half_cheetah':
-        modified_code=existing_lines[:step_function_start]+['        reward = forward_reward - ctrl_cost\n']+existing_lines[step_function_start+len(reward_function(env.lower(),wall,wall_size)):]
+        modified_code=existing_lines[:step_function_start]+['        reward = forward_reward - ctrl_cost\n']+existing_lines[step_function_start+len(reward_function(env.lower())[0]):]
     else:
-        modified_code = existing_lines[:step_function_start]+['        rewards = forward_reward + healthy_reward\n']+existing_lines[step_function_start+len(reward_function(env.lower(),wall,wall_size)):]
-
-    # 수정된 코드를 파일에 쓰기
+        modified_code = existing_lines[:step_function_start]+['        rewards = forward_reward + healthy_reward\n']+existing_lines[step_function_start+len(reward_function(env.lower())[0]):]
     with open(env_py, 'w') as file:
         file.write("".join(modified_code))
-
-def function_reward_list(wall,wall_size,list_):
-    if len(list_)==1:
-            function_code= [f"        height_reward =  self.state_vector()[{list_[0]}] \n",
-    "        reward = forward_reward  + height_reward\n"]
-    elif len(list_)==3:
-            function_code= [f"        height_reward =  self.state_vector()[{list_[0]}] \n",
-    f"        z_velocity_reward = self.state_vector()[{list_[2]}] \n",
-    "        rewards = forward_reward  + height_reward + z_velocity_reward + healthy_reward\n"]
-        
-    return function_code   
-
-#Hopper 0 5 6
-#Ant 0 ,13 15
-#Halfcheetah 0
-#Walker2d 0  8 9
-#Humanoid 0 22 24
