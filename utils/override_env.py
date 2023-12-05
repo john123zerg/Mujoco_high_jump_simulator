@@ -6,6 +6,7 @@ def reward_function(env):
     match env:
         case 'half_cheetah':
             list_=[1,0]
+            height_=0.7
         case 'walker2d':
             list_=[1,9,10,0]
             height_=1.25
@@ -26,14 +27,27 @@ def reward_function(env):
 def function_reward_list(list_,height_):
     if len(list_)==2:
              
-            function_code= [f"        height_reward =  100**(self.state_vector()[{list_[0]}]/{height_}) if self.state_vector()[{list_[0]}]/{height_} > 0.5 else -100.0 ** {height_}/(self.state_vector()[{list_[0]}]+1e-8)\n",
-    "        reward = forward_reward  + height_reward - ctrl_cost\n"]
+            function_code= [f"        height_reward =  100*(self.state_vector()[{list_[0]}]/{height_}) if self.state_vector()[{list_[0]}]/{height_} > 1.0 else 0.0 \n",
+    f"        height_reward_2 = 10*(self.state_vector()[{list_[0]}]/{height_}) if self.state_vector()[{list_[0]}]/{height_} > 0.5 and self.state_vector()[{list_[0]}]/{height_} < 1.0 else 0.0\n",
+    f"        height_reward_3 = -10*(self.state_vector()[{list_[0]}]/{height_}) if self.state_vector()[{list_[0]}]/{height_} < 0.5 else 0.0\n",                 
+    f"        x_reward = 100 * self.state_vector()[{list_[-1]}] if self.state_vector()[{list_[-1]}] > 1.0 else 0.0\n",                       
+    f"        x_reward_2 = 10 * self.state_vector()[{list_[-1]}] if self.state_vector()[{list_[-1]}] > 0.5 and self.state_vector()[{list_[3]}] < 1.0 else 0.0\n",
+    f"        x_reward_3 = -10 * self.state_vector()[{list_[-1]}] if self.state_vector()[{list_[-1]}] < 0.5 else 0.0\n",
+    f"        total_reward=height_reward + height_reward_2 + height_reward_3 + x_reward + x_reward_2 + x_reward_3\n",
+    "        reward = forward_reward  + total_reward - ctrl_cost\n"]
     elif len(list_)==4:
-            function_code= [f"        height_reward =  100**(self.state_vector()[{list_[0]}]/{height_}) if self.state_vector()[{list_[0]}]/{height_} > 0.5 else -100.0 ** {height_}/(self.state_vector()[{list_[0]}]+1e-8)\n",
-    f"        x_reward = 100 ** self.state_vector()[{list_[3]}] if self.state_vector()[{list_[3]}] > 0.0 else -100 ** -self.state_vector()[{list_[3]}]\n",                       
-    f"        x_velocity_reward = 10**self.state_vector()[{list_[1]}] if self.state_vector()[{list_[1]}] > 0.0 else 0.0\n",  
-    f"        z_velocity_reward = 10**self.state_vector()[{list_[2]}] if self.state_vector()[{list_[2]}] > 0.0 else 0.0\n", 
-    "        rewards = forward_reward  + height_reward + x_velocity_reward + z_velocity_reward + healthy_reward + x_reward\n"]
+            function_code= [f"        height_reward =  100*(self.state_vector()[{list_[0]}]/{height_}) if self.state_vector()[{list_[0]}]/{height_} > 1.0 else 0.0 \n",
+    f"        height_reward_2 = 10*(self.state_vector()[{list_[0]}]/{height_}) if self.state_vector()[{list_[0]}]/{height_} > 0.5 and self.state_vector()[{list_[0]}]/{height_} < 1.0 else 0.0\n",
+    f"        height_reward_3 = -10*(self.state_vector()[{list_[0]}]/{height_}) if self.state_vector()[{list_[0]}]/{height_} < 0.5 else 0.0\n",                       
+    f"        x_reward = 100 * self.state_vector()[{list_[-1]}] if self.state_vector()[{list_[-1]}] > 1.0 else 0.0\n",                       
+    f"        x_reward_2 = 10 * self.state_vector()[{list_[-1]}] if self.state_vector()[{list_[-1]}] > 0.5 and self.state_vector()[{list_[3]}] < 1.0 else 0.0\n",
+    f"        x_reward_3 = -10 * self.state_vector()[{list_[-1]}] if self.state_vector()[{list_[-1]}] < 0.5 else 0.0\n",
+    f"        x_velocity_reward = 100*self.state_vector()[{list_[1]}] if self.state_vector()[{list_[1]}] > 1.0 else  0.0\n",  
+    f"        x_velocity_reward_2 = 5*self.state_vector()[{list_[1]}] if self.state_vector()[{list_[1]}] < 1.0 and self.state_vector()[{list_[1]}] > 0.5 else 0.0\n",
+    f"        z_velocity_reward = 5*self.state_vector()[{list_[2]}] if self.state_vector()[{list_[2]}] > 1.0 else 0.0\n", 
+    f"        z_velocity_reward_2 = 5*self.state_vector()[{list_[2]}] if self.state_vector()[{list_[2]}] < 1.0 and self.state_vector()[{list_[2]}] > 0.5 else 0.0\n",
+    f"        total_reward=height_reward + height_reward_2 + height_reward_3 + x_reward + x_reward_2 + x_reward_3 + x_velocity_reward + x_velocity_reward_2 + z_velocity_reward + z_velocity_reward_2\n",
+    "        rewards = forward_reward  + total_reward + healthy_reward\n"]
     return function_code
 
 
