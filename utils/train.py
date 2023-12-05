@@ -35,8 +35,8 @@ def train_model(env, sb3_algo,policy,critic_size,wall,wall_size,reward_function)
         policy_='CnnPolicy'
     elif policy=='DNN':
         
-        policy_kwargs_=DNN_usage(sb3_algo,algo_on_list,log_dir)[0]
-        log_dir=DNN_usage(sb3_algo,algo_on_list,log_dir)[1]
+        policy_kwargs_=DNN_usage(sb3_algo,algo_on_list,log_dir,critic_size)[0]
+        log_dir=DNN_usage(sb3_algo,algo_on_list,log_dir,critic_size)[1]
         policy_='MlpPolicy'
     else:
         policy_kwargs_=None
@@ -98,7 +98,7 @@ def train_model(env, sb3_algo,policy,critic_size,wall,wall_size,reward_function)
 
 ######################DNN
     # In case you want to use the DNN
-def DNN_usage(sb3_algo,algo_on_list,log_dir)
+def DNN_usage(sb3_algo,algo_on_list,log_dir,critic_size):
 
     if sb3_algo in algo_on_list:
         policy_kwargs_dnn = dict(activation_fn=torch.nn.ReLU,
