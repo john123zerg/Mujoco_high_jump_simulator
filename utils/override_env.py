@@ -29,16 +29,16 @@ def function_reward_list(list_,height_):
              
             function_code= [f"        height_reward =  100*(self.state_vector()[{list_[0]}]/{height_}) if self.state_vector()[{list_[0]}]/{height_} > 1.0 else 0.0 \n",
     f"        height_reward_2 = 10*(self.state_vector()[{list_[0]}]/{height_}) if self.state_vector()[{list_[0]}]/{height_} > 0.5 and self.state_vector()[{list_[0]}]/{height_} < 1.0 else 0.0\n",
-    f"        height_reward_3 = -10*(self.state_vector()[{list_[0]}]/{height_}) if self.state_vector()[{list_[0]}]/{height_} < 0.5 else 0.0\n",                 
-    f"        x_reward = 100 * self.state_vector()[{list_[-1]}] if self.state_vector()[{list_[-1]}] > 3.0 else 0.0\n",                       
-    f"        x_reward_2 = 10 * self.state_vector()[{list_[-1]}] if self.state_vector()[{list_[-1]}] > 0.5 and self.state_vector()[{list_[3]}] < 3.0 else 0.0\n",
-    f"        x_reward_3 = -10 * abs(self.state_vector()[{list_[-1]}]) if self.state_vector()[{list_[-1]}] < 0.5 else 0.0\n",
+    f"        height_reward_3 = -10*abs((self.state_vector()[{list_[0]}]/{height_})) if self.state_vector()[{list_[0]}]/{height_} < 0.5 else 0.0\n",                 
+    f"        x_reward = 100 * self.state_vector()[{list_[-1]}] if self.state_vector()[{list_[-1]}] > 1.0 else 0.0\n",                       
+    f"        x_reward_2 = 10 * self.state_vector()[{list_[-1]}] if self.state_vector()[{list_[-1]}] > 0.5 and self.state_vector()[{list_[3]}] < 1.0 else 0.0\n",
+    f"        x_reward_3 = -10 * self.state_vector()[{list_[-1]}] if self.state_vector()[{list_[-1]}] < 0.5 else 0.0\n",
     f"        total_reward=height_reward + height_reward_2 + height_reward_3 + x_reward + x_reward_2 + x_reward_3\n",
     "        reward = forward_reward  + total_reward - ctrl_cost\n"]
     elif len(list_)==4:
             function_code= [f"        height_reward =  100*(self.state_vector()[{list_[0]}]/{height_}) if self.state_vector()[{list_[0]}]/{height_} > 1.0 else 0.0 \n",
     f"        height_reward_2 = 10*(self.state_vector()[{list_[0]}]/{height_}) if self.state_vector()[{list_[0]}]/{height_} > 0.5 and self.state_vector()[{list_[0]}]/{height_} < 1.0 else 0.0\n",
-    f"        height_reward_3 = -10*(self.state_vector()[{list_[0]}]/{height_}) if self.state_vector()[{list_[0]}]/{height_} < 0.5 else 0.0\n",                       
+    f"        height_reward_3 = -10*abs((self.state_vector()[{list_[0]}]/{height_})) if self.state_vector()[{list_[0]}]/{height_} < 0.5 else 0.0\n",                       
     f"        x_reward = 100 * self.state_vector()[{list_[-1]}] if self.state_vector()[{list_[-1]}] > 3.0 else 0.0\n",                       
     f"        x_reward_2 = 10 * self.state_vector()[{list_[-1]}] if self.state_vector()[{list_[-1]}] > 0.5 and self.state_vector()[{list_[3]}] < 3.0 else 0.0\n",
     f"        x_reward_3 = -10 * abs(self.state_vector()[{list_[-1]}]) if self.state_vector()[{list_[-1]}] < 0.5 else 0.0\n",
