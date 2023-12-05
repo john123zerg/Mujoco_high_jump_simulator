@@ -44,6 +44,7 @@ To make these operations a whole pipeline, we made codes that would enable editi
 
 
 # 1. Python setups
+## ※ Beware that our environment is Ubuntu 22.04.03LTS, it may not work in Mac OSX.
 1. Creating the conda environment
     ```bash
     git clone https://github.com/john123zerg/Mujoco_high_jump_simulator.git
