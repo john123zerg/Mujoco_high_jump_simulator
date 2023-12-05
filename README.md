@@ -92,7 +92,7 @@ use the env variable `MUJOCO_PY_MUJOCO_PATH`.
     It will train until 1 million.
    ```bash
     python main.py Walker2d SAC -t -z 1 -w 1 -ws 0.2 -tw 1 -tws 0.2 -z 1
-    The parameters -t : train, -z : changing_the_reward_function_to_high_jump_reward (Bool), -w : wall existence for path (Bool), -ws : wall_size for path (Float), -tw : train_wall (Bool) -tws : modify the wall size(Float)
+    #The parameters -t : train, -z : changing_the_reward_function_to_high_jump_reward (Bool), -w : wall existence for path (Bool), -ws : wall_size for path (Float), -tw : train_wall (Bool) -tws : modify the wall size(Float)
 
 
 # 4. How to Test 
