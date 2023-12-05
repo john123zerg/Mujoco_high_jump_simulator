@@ -1,4 +1,4 @@
-### This folder is mainly for the files that have the functions to edit the XML file, edit the environment file, path searching, training, and testing.
+### This folder is mainly for the files with the functions to edit the XML file, edit the environment file, search the file path, train, and test.
 
 ##
 
