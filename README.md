@@ -51,6 +51,7 @@ To make these operations a whole pipeline, we made codes that would enable editi
     conda activate mujoco
     pip install -r requirements.txt
     pip install install patchelf
+    python init.py
 # 2. Make sure you have mujoco
 The following platforms are currently supported:
 
