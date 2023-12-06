@@ -106,14 +106,14 @@ def DNN_usage(sb3_algo,algo_on_list,log_dir,critic_size):
         if critic_size!=32:
             policy_kwargs_dnn = dict(activation_fn=torch.nn.ReLU,
                      net_arch=dict(pi=[32, 32], vf=[int(critic_size), int(critic_size)]))
-            log_dir+=f'/critic_size_{critic_size}'
+        log_dir+=f'/critic_size_{critic_size}'
     else:
         policy_kwargs_dnn = dict(activation_fn=torch.nn.ReLU,
                      net_arch=dict(pi=[32, 32], qf=[32, 32]))
         if critic_size!=32:
             policy_kwargs_dnn = dict(activation_fn=torch.nn.ReLU,
                      net_arch=dict(pi=[32, 32], qf=[int(critic_size), int(critic_size)]))
-            log_dir+=f'/critic_size_{critic_size}'
+        log_dir+=f'/critic_size_{critic_size}'
 
     return policy_kwargs_dnn,log_dir
 
