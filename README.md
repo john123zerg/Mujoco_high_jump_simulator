@@ -23,7 +23,8 @@ Train settings
 (All of them are v4)
 | Humanoid    | Walker2d    | Hopper      | HalfCheetah | Ant         |  
 |-------------|-------------|-------------|-------------|-------------|
-|<img width="300" height='180' alt="image" src="https://github.com/john123zerg/Mujoco_high_jump_simulator/assets/63462803/fc70570c-2ec5-464c-8606-426fd8fdcbb2">|<img width="300" height='180' alt="image" src="https://github.com/john123zerg/Mujoco_high_jump_simulator/assets/63462803/c0ee6381-8ac0-4d22-94da-0af25f07f350">|<img width="300" height='180' alt="image" src="https://github.com/john123zerg/Mujoco_high_jump_simulator/assets/63462803/96c4388e-d6e5-4d61-b821-6ff59e9089e8">|<img width="300" height='180' alt="image" src="https://github.com/john123zerg/Mujoco_high_jump_simulator/assets/63462803/c5a109ca-cdae-412a-a242-92f865303660">|<img width="300" height='180' alt="image" src="https://github.com/john123zerg/Mujoco_high_jump_simulator/assets/63462803/d4f31a02-61b5-4caa-8076-3760c9df5c7a">|
+|<img width="160" height='160' alt="image" src="https://github.com/john123zerg/Mujoco_high_jump_simulator/assets/63462803/59cb2ede-b1ac-4125-a551-854013d5aba0">|<img width="160" height='160' alt="image" src="https://github.com/john123zerg/Mujoco_high_jump_simulator/assets/63462803/23f15ebb-3645-44c7-b7c5-8c328e563c58">|<img width="160" height='160' alt="image" src="https://github.com/john123zerg/Mujoco_high_jump_simulator/assets/63462803/901594cb-545b-40f4-bffc-3729a20f8f0f">|<img width="160" height='160' alt="image" src="https://github.com/john123zerg/Mujoco_high_jump_simulator/assets/63462803/70c4903a-f966-4129-89a6-5501d8d58008">|<img width="160" height='160' alt="image" src="https://github.com/john123zerg/Mujoco_high_jump_simulator/assets/63462803/03fe9194-22be-4bf9-a0a8-d0764cb19c03">|
+
 
 
 
