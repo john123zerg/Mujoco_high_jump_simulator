@@ -119,11 +119,7 @@ The parameters
 
 # 4. How to Test 
     
-1. Download the model files from the models folder if you want the full files (The final models are already in the repository)
-   
-    https://drive.google.com/file/d/1e43kluy7EnhDWN1LeRMWMxoJAoGZUYT-/view?usp=sharing
-
-2. Test
+1. Test
    If you want to test with a wall when you didn't train with a wall,
    ```bash
     python main.py Humanoid SAC -s . -w 1 -ws 0.2 -tw 1 -tws 0.2 -z 1 -r 1 -f 0
