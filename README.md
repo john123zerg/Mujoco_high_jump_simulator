@@ -7,17 +7,25 @@ Our goal is to simulate a Mujoco high jump since the Mujoco environment usually 
 
 ## Environment setup
 
-CPU: Intel i7-13700
+CPU : Intel i7 - 13700
 
-GPU: RTX-4090
+GPU : RTX - 4090 
 
-RAM: 64GB
+RAM : 64 GB
 
-OS : Ubuntu 22.04.03 LTS
+OS : Ubuntu 22.04.03 LTS 
 
-Conda environment : Python 3.11.0
+Conda environment : Python 3.11.0 
+
+PyTorch version : 2.1.0
+
+MuJoCo version : MuJoCo210
+
+MuJoCo Env version : v4 (Gymnasium not Open AI Gym)
 
 Mujoco model : mujoco210
+
+Base code : Stable baselines3, Stable baselines3-contrib
 
 Train settings
 (All of them are v4)
