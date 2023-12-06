@@ -50,6 +50,6 @@ if __name__ == '__main__':
         test_file=parse_pattern.search_file(args.gymenv+'-'+args.sb3_algo,args.policy,args.critic_size,args.wall,args.wall_size,args.test_wall,args.reward_function,args.file_number)
         if os.path.isfile(test_file):
             gymenv = gym.make(args.gymenv+'-v4', render_mode='human')
-            test.test_model(gymenv, args.sb3_algo,args.record, path_to_model=test_file)
+            test.test_model(gymenv, args.sb3_algo,args.replay, path_to_model=test_file)
         else:
             print(f'{args.test} not found.')
