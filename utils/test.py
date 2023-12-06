@@ -56,15 +56,15 @@ def test_model(env, sb3_algo,record,path_to_model):
 
         if obs[list_[0]] > max_height:
             max_height = obs[list_[0]]
-        if obs[list_[1]] > max_x_vel:
+        if modified_env.lower() != 'halfcheetah'  and obs[list_[1]] > max_x_vel:
             max_x_vel = obs[list_[1]]
         # Since HalfCheetah doesn't have x velocity or z velocity in the state space
         if modified_env.lower() != 'halfcheetah' and obs[list_[2]] > max_velocity:
             max_velocity = obs[list_[2]]
-
-        # Update variables for calculating averages
         total_height += obs[list_[0]]
-        total_velocity += obs[list_[2]]
+        if modified_env.lower() != 'halfcheetah' :# Update variables for calculating averages
+            
+            total_velocity += obs[list_[2]]
         num_steps += 1
 
         # If you added -r 1 in the command line, you will not end the test in 10 seconds
