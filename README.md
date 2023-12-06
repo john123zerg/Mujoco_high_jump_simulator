@@ -126,7 +126,7 @@ The parameters
 2. Test
    If you want to test with a wall when you didn't train with a wall,
    ```bash
-    python main.py Humanoid SAC -s . -w 1 -ws 0.2 -tw 1 -tws 0.2 -z 1 -r 1 -f 1
+    python main.py Humanoid SAC -s . -w 1 -ws 0.2 -tw 1 -tws 0.2 -z 1 -r 1 -f 0
 The parameters 
 
 -s : Enables entering test mode
