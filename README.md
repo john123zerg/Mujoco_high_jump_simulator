@@ -103,11 +103,17 @@ use the env variable `MUJOCO_PY_MUJOCO_PATH`.
     python main.py Walker2d SAC -t -z 1 -w 1 -ws 0.2 -tw 1 -tws 0.2 -z 1
 
 The parameters 
+
 -t : train 
+
 -z : changing_the_reward_function_to_high_jump_reward (Bool)
+
 -w : wall existence for path (Bool)
+
 -ws : wall_size for path (Float)
+
 -tw : train_wall (Bool) 
+
 -tws : modify the wall size (Float)
 
 
@@ -122,10 +128,15 @@ The parameters
    ```bash
     python main.py Humanoid SAC -s . -w 1 -ws 0.2 -tw 1 -tws 0.2 -z 1 -r 1 -f 1
 The parameters 
+
 -s : Enables entering test mode
+
 -tw : train_wall -> tells the path_parser whether to find a wall_trained model or not (Bool)
+
 -w -ws -tws it's changing the XML so it deletes, creates, or modifies the wall
+
 -r : replay file - 1 enables the test to last forever if not, it will end after 10 seconds (Bool), -f : file rank number ranking - 0 is default (Int)
+
 
 # 5. Using the Tensorboard
 
