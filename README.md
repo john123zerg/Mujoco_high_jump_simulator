@@ -148,3 +148,31 @@ The parameters
 
    
 
+
+# 6. For testing the results from the paper
+1. Humanoid no wall base reward
+    ```bash
+    python main.py Humanoid SAC -s . -w 1 -ws 0.2 -tw 0 -tws 0.2 -z 0 -r 1
+2. Humanoid no wall change reward
+    ```bash
+    python main.py Humanoid SAC -s . -w 1 -ws 0.2 -tw 0 -tws 0.2 -z 1 -r 1
+3. Humanoid wall base reward
+    ```bash
+    python main.py Humanoid SAC -s . -w 1 -ws 0.2 -tw 1 -tws 0.2 -z 0 -r 1
+4. Humanoid wall change reward
+    ```bash
+    python main.py Humanoid SAC -s . -w 1 -ws 0.2 -tw 1 -tws 0.2 -z 1 -r 1
+
+5. HalfCheetah no wall base reward
+    ```bash
+    python main.py HalfCheetah SAC -s . -w 1 -ws 0.2 -tw 0 -tws 0.2 -z 0 -r 1
+6. HalfCheetah no wall change reward
+    ```bash
+    python main.py HalfCheetah SAC -s . -w 1 -ws 0.2 -tw 0 -tws 0.2 -z 1 -r 1
+7. HalfCheetah wall base reward
+    ```bash
+    python main.py HalfCheetah SAC -s . -w 1 -ws 0.2 -tw 1 -tws 0.2 -z 0 -r 1
+8. HalfCheetah wall change reward
+    ```bash
+    python main.py HalfCheetah SAC -s . -w 1 -ws 0.2 -tw 1 -tws 0.2 -z 1 -r 1
+
