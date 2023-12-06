@@ -32,6 +32,8 @@ def test_model(env, sb3_algo,record,path_to_model):
     extra_steps = 500
     max_height=0
     max_velocity=0
+    max_x_vel=0
+    num_steps = 0
     match modified_env.lower():
         #Get the states representing z_coordinates,x_velocity,z_velocity
         case 'halfcheetah':
@@ -46,15 +48,24 @@ def test_model(env, sb3_algo,record,path_to_model):
             list_=[0,5,6]
     start_time = time.time()
     elapsed_time = 0
+    total_height = 0
+    total_velocity = 0
     while True:
         action, _states = model.predict(obs)
         obs, _, done, _, _ = env.step(action)
 
         if obs[list_[0]] > max_height:
             max_height = obs[list_[0]]
+        if obs[list_[1]] > max_x_vel:
+            max_x_vel = obs[list_[1]]
         # Since HalfCheetah doesn't have x velocity or z velocity in the state space
         if modified_env.lower() != 'halfcheetah' and obs[list_[2]] > max_velocity:
             max_velocity = obs[list_[2]]
+
+        # Update variables for calculating averages
+        total_height += obs[list_[0]]
+        total_velocity += obs[list_[2]]
+        num_steps += 1
 
         # If you added -r 1 in the command line, you will not end the test in 10 seconds
         # If you did nothing in the command line, the test will end in 10 seconds
@@ -66,6 +77,9 @@ def test_model(env, sb3_algo,record,path_to_model):
         if elapsed_time > 10:
             print(f'Maximum Height: {max_height}')
             print(f'Maximum Velocity: {max_velocity}')
+            print(f'Maximum X Velocity: {max_x_vel}')
+            print(f'Average Height: {total_height / num_steps}')
+            print(f'Average Velocity: {total_velocity / num_steps}')
             print(f"Agent stayed at x position for more than 10 seconds. Terminating.")
             break
         if done:
@@ -74,4 +88,7 @@ def test_model(env, sb3_algo,record,path_to_model):
             if extra_steps < 0:
                 print(f'Maximum Height: {max_height}')
                 print(f'Maximum Velocity: {max_velocity}')
+                print(f'Maximum X Velocity: {max_x_vel}')
+                print(f'Average Height: {total_height / num_steps}')
+                print(f'Average Velocity: {total_velocity / num_steps}')
                 break
