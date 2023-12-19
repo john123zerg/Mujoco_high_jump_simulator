@@ -61,9 +61,9 @@ def train_model(env, sb3_algo,policy,critic_size,wall,wall_size,reward_function)
             print('Algorithm not found')
             return
 
-    TIMESTEPS = 25000
+    TIMESTEPS = 50000
     iters = 0
-    MAX_TIMESTEPS = 1000000
+    MAX_TIMESTEPS = 2000000
     total_timesteps = 0
     while total_timesteps < MAX_TIMESTEPS:
             iters += 1
@@ -79,6 +79,7 @@ def train_model(env, sb3_algo,policy,critic_size,wall,wall_size,reward_function)
                 # Create a directory for policy if it doesn't exist
                 if policy != 'None':
                     sb3_algo_dir = os.path.join(sb3_algo_dir, policy)
+                    sb3_algo_dir = os.path.join(sb3_algo_dir, 'critic_size_'+str(critic_size))
                     ###os.makedirs(sb3_algo_dir, exist_ok=True)
                 else:
                     sb3_algo_dir = os.path.join(sb3_algo_dir, 'MlpPolicy')
@@ -91,8 +92,6 @@ def train_model(env, sb3_algo,policy,critic_size,wall,wall_size,reward_function)
             else:
                 model.learn(total_timesteps=TIMESTEPS, reset_num_timesteps=False)
                 total_timesteps += TIMESTEPS
-            if critic_size!=32:
-                file_name=f"./{sb3_algo_dir}/{wall}/{wall_size}/reward_function_{reward_function}/critic_size_{critic_size}/{inner_content}_{sb3_algo}_{policy}_{critic_size}_{total_timesteps:010d}"
             file_name = f"./{sb3_algo_dir}/{wall}/{wall_size}/reward_function_{reward_function}/{inner_content}_{sb3_algo}_{policy}_{total_timesteps:010d}"
             model.save(file_name)
 
