@@ -134,6 +134,8 @@ The parameters
 -r : replay file - 1 enables the test to last forever if not, it will end after 10 seconds (Bool), -f : file rank number ranking - 0 is default (Int)
 
 
+
+
 # 5. Using the Tensorboard
 
 1. Tensorboard commands (Your train code needs to be running)
@@ -143,7 +145,7 @@ The parameters
    ![image](https://github.com/john123zerg/Mujoco_high_jump_simulator/assets/63462803/a791591f-bfdb-4b70-9315-b306e4d4d5aa)
 
    
-
+※ If you want extra models, please contact me.
 
 # 6. For testing the results from the paper
 1. Humanoid no wall base reward
